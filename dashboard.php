@@ -4,7 +4,7 @@ session_start();
 include 'db_config.php';
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: index.php");
+    header("Location: index.html");
     exit();
 }
 

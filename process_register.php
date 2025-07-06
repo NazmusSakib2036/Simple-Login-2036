@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
         $_SESSION['message'] = "Registration successful! You can now login.";
-        header("Location: index.php");
+        header("Location: index.html");
         exit();
     } else {
         if ($conn->errno == 1062) {
