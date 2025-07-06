@@ -29,19 +29,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         } else {
             $_SESSION['message'] = "Invalid username/email or password.";
-            header("Location: index.html");
+            header("Location: index.php");
             exit(); 
         }
     } else {
         $_SESSION['message'] = "Invalid username/email or password.";
-        header("Location: index.html");
+        header("Location: index.php");
         exit();
     }
 
     $stmt->close();
     $conn->close();
 } else {
-    header("Location: index.html");
+    header("Location: index.php");
     exit();
 }
 ?>

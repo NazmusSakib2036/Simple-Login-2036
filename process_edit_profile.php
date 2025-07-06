@@ -5,7 +5,7 @@ include 'db_config.php';
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     $_SESSION['message'] = "Please log in to edit your profile.";
-    header("Location: index.html");
+    header("Location: index.php");
     exit();
 }
 
