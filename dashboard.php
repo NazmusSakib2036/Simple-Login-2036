@@ -1,28 +1,24 @@
 <?php
-ob_start(); // আউটপুট বাফারিং শুরু
-session_start(); // সেশন শুরু
-include 'db_config.php'; // ডেটাবেস কনফিগারেশন ইনক্লুড করুন
+ob_start();
+session_start();
+include 'db_config.php';
 
-// Check if the user is logged in, if not, redirect to login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: index.php");
     exit();
 }
 
-// Set a default image if no profile image is uploaded
 $profile_image_src = "uploads/default.png";
 if (!empty($_SESSION['profile_image'])) {
     $profile_image_src = "uploads/" . htmlspecialchars($_SESSION['profile_image']);
 }
 
-// সেশন মেসেজ ডিসপ্লে
 $message = '';
 if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];
     unset($_SESSION['message']);
 }
 
-// বর্তমান ব্যবহারকারীর ডেটা লোড করুন (নিশ্চিত করার জন্য)
 $current_user_id = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT username, email, profession, profile_image FROM users WHERE id = ?");
 $stmt->bind_param("i", $current_user_id);
@@ -32,18 +28,15 @@ $user_data = $result->fetch_assoc();
 $stmt->close();
 
 if (!$user_data) {
-    // যদি কোনো কারণে ইউজার ডেটা না পাওয়া যায়, লগআউট করুন
     header("Location: logout.php");
     exit();
 }
 
-// সেশন ডেটা আপডেট করুন যদি ডেটাবেস থেকে নতুন ডেটা আসে
 $_SESSION['username'] = $user_data['username'];
 $_SESSION['email'] = $user_data['email'];
 $_SESSION['profession'] = $user_data['profession'];
 $_SESSION['profile_image'] = $user_data['profile_image'];
 
-// প্রোফাইল ইমেজ পাথ আবার সেট করুন আপডেট করা সেশন ডেটা থেকে
 $profile_image_src = "uploads/default.png";
 if (!empty($_SESSION['profile_image'])) {
     $profile_image_src = "uploads/" . htmlspecialchars($_SESSION['profile_image']);
@@ -58,29 +51,27 @@ if (!empty($_SESSION['profile_image'])) {
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Optional: Add some styling for the profile image */
         .profile-img {
-            width: 120px; /* Slightly larger image */
+            width: 120px;
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            margin: 20px auto; /* Center image and add vertical margin */
-            border: 4px solid #007bff; /* Thicker, prominent border */
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Shadow for image */
-            cursor: pointer; /* এডিট করার জন্য কার্সার পয়েন্টার */
+            margin: 20px auto; 
+            border: 4px solid #007bff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
         }
 
-        /* Edit Profile Modal Styling */
         .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
+            display: none;
+            position: fixed; 
+            z-index: 1; 
             left: 0;
             top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            width: 100%; 
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -149,7 +140,7 @@ if (!empty($_SESSION['profile_image'])) {
         <p><a href="logout.php">Logout</a></p>
     </div>
 
-    <!-- Edit Profile Modal -->
+
     <div id="editProfileModal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close-button" onclick="closeEditModal()">&times;</span>
@@ -199,9 +190,8 @@ if (!empty($_SESSION['profile_image'])) {
     </div>
 
     <script>
-        // JavaScript for Edit Profile Modal
         const editProfileModal = document.getElementById('editProfileModal');
-        const profileImageDisplay = document.getElementById('profileImageDisplay'); // Add ID to img tag
+        const profileImageDisplay = document.getElementById('profileImageDisplay'); 
         const editProfessionSelect = document.getElementById('edit_profession_select');
         const editOtherProfessionGroup = document.getElementById('edit_other_profession_group');
         const editOtherProfessionInput = document.getElementById('edit_other_profession_input');
@@ -209,8 +199,7 @@ if (!empty($_SESSION['profile_image'])) {
         const editConfirmPassword = document.getElementById('edit_confirm_password');
 
         function openEditModal() {
-            editProfileModal.style.display = 'flex'; // Use flex to center
-            // Reset password fields when opening modal
+            editProfileModal.style.display = 'flex'; 
             editPassword.value = '';
             editConfirmPassword.value = '';
             editPassword.setCustomValidity('');
@@ -221,14 +210,12 @@ if (!empty($_SESSION['profile_image'])) {
             editProfileModal.style.display = 'none';
         }
 
-        // Close modal if user clicks outside of it
         window.onclick = function(event) {
             if (event.target == editProfileModal) {
                 editProfileModal.style.display = 'none';
             }
         }
 
-        // Password validation for edit form
         function validateEditPassword(){
             if(editPassword.value !== editConfirmPassword.value) {
                 editConfirmPassword.setCustomValidity("Passwords Don't Match");
@@ -239,7 +226,6 @@ if (!empty($_SESSION['profile_image'])) {
         editPassword.onchange = validateEditPassword;
         editConfirmPassword.onkeyup = validateEditPassword;
 
-        // "Other" profession logic for edit form
         editProfessionSelect.addEventListener('change', function() {
             if (this.value === 'Other') {
                 editOtherProfessionGroup.style.display = 'block';
@@ -251,7 +237,6 @@ if (!empty($_SESSION['profile_image'])) {
             }
         });
 
-        // Trigger change event on load to show "Other" if already selected
         window.addEventListener('load', function() {
             editProfessionSelect.dispatchEvent(new Event('change'));
         });
@@ -260,5 +245,5 @@ if (!empty($_SESSION['profile_image'])) {
 </body>
 </html>
 <?php
-ob_end_flush(); // আউটপুট বাফারিং শেষ
+ob_end_flush();
 ?>

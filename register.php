@@ -1,6 +1,6 @@
 <?php
-ob_start(); // আউটপুট বাফারিং শুরু
-session_start(); // সেশন শুরু
+ob_start();
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +54,6 @@ session_start(); // সেশন শুরু
                 <label for="other_profession_input">Specify Profession:</label>
                 <input type="text" id="other_profession_input" name="profession_other" placeholder="e.g., Designer">
             </div>
-            <!-- প্রোফাইল ইমেজ ইনপুট ফিল্ড এখান থেকে সরানো হয়েছে -->
             <button type="submit">Register</button>
         </form>
         <p>Already have an account? <a href="index.php">Login here</a></p>
@@ -93,5 +92,5 @@ session_start(); // সেশন শুরু
 </body>
 </html>
 <?php
-ob_end_flush(); // আউটপুট বাফারিং শেষ
+ob_end_flush();
 ?>

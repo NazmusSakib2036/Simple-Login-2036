@@ -1,6 +1,6 @@
 <?php
-ob_start(); // আউটপুট বাফারিং শুরু
-session_start(); // সেশন শুরু
+ob_start();
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +9,6 @@ session_start(); // সেশন শুরু
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Google Sign-In Platform Library -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
@@ -36,7 +35,6 @@ session_start(); // সেশন শুরু
 
         <div class="social-login-divider">OR</div>
 
-        <!-- Google Sign-In Button -->
         <div id="g_id_onload"
              data-client_id="950408503495-s96v40fehs80r4q6li7jqof47q8gtof9.apps.googleusercontent.com"
              data-callback="handleGoogleSignIn"
@@ -82,5 +80,5 @@ session_start(); // সেশন শুরু
 </body>
 </html>
 <?php
-ob_end_flush(); // আউটপুট বাফারিং শেষ
+ob_end_flush();
 ?>

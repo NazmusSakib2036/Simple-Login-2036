@@ -1,6 +1,6 @@
 <?php
-ob_start(); // আউটপুট বাফারিং শুরু
-session_start(); // সেশন শুরু
+ob_start();
+session_start();
 include 'db_config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -39,8 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $plain_password = $password;
 
-    // প্রোফাইল ইমেজ হ্যান্ডলিং কোড এখান থেকে সরানো হয়েছে
-    $profile_image_path = 'default.png'; // ডিফল্ট ইমেজ সেট করা হয়েছে
+    $profile_image_path = 'default.png'; 
 
     $stmt = $conn->prepare("INSERT INTO users (username, email, password, profession, profile_image) VALUES (?, ?, ?, ?, ?)");
     if ($stmt === false) {
@@ -70,5 +69,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <?php
-ob_end_flush(); // আউটপুট বাফারিং শেষ
+ob_end_flush();
 ?>

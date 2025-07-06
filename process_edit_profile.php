@@ -1,9 +1,8 @@
 <?php
-ob_start(); // আউটপুট বাফারিং শুরু
-session_start(); // সেশন শুরু
+ob_start();
+session_start();
 include 'db_config.php';
 
-// ইউজার লগইন করা আছে কিনা চেক করুন
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     $_SESSION['message'] = "Please log in to edit your profile.";
     header("Location: index.php");
@@ -17,7 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_password = $_POST['new_password'];
     $confirm_new_password = $_POST['confirm_new_password'];
 
-    // --- PROFESSION HANDLING START ---
     $new_profession = NULL;
     if (isset($_POST['profession_selected'])) {
         $selected_profession = $_POST['profession_selected'];
@@ -32,15 +30,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $new_profession = $selected_profession;
         }
     }
-    // --- PROFESSION HANDLING END ---
 
     $update_fields = [];
     $bind_types = '';
     $bind_params = [];
 
-    // ইউজারনেম আপডেট
     if ($new_username !== $_SESSION['username']) {
-        // ইউজারনেম ইউনিক কিনা চেক করুন
         $stmt_check_username = $conn->prepare("SELECT id FROM users WHERE username = ? AND id != ?");
         $stmt_check_username->bind_param("si", $new_username, $user_id);
         $stmt_check_username->execute();
@@ -55,12 +50,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $update_fields[] = "username = ?";
         $bind_types .= "s";
         $bind_params[] = $new_username;
-        $_SESSION['username'] = $new_username; // সেশন আপডেট
+        $_SESSION['username'] = $new_username; 
     }
 
-    // ইমেইল আপডেট
     if ($new_email !== $_SESSION['email']) {
-        // ইমেইল ইউনিক কিনা চেক করুন
         $stmt_check_email = $conn->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
         $stmt_check_email->bind_param("si", $new_email, $user_id);
         $stmt_check_email->execute();
@@ -75,10 +68,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $update_fields[] = "email = ?";
         $bind_types .= "s";
         $bind_params[] = $new_email;
-        $_SESSION['email'] = $new_email; // সেশন আপডেট
+        $_SESSION['email'] = $new_email; 
     }
 
-    // পাসওয়ার্ড আপডেট
     if (!empty($new_password)) {
         if ($new_password !== $confirm_new_password) {
             $_SESSION['message'] = "New passwords do not match!";
@@ -92,20 +84,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         $update_fields[] = "password = ?";
         $bind_types .= "s";
-        $bind_params[] = $new_password; // প্লেন টেক্সট পাসওয়ার্ড
+        $bind_params[] = $new_password; 
     }
 
-    // প্রফেশন আপডেট
     if ($new_profession !== $_SESSION['profession']) {
         $update_fields[] = "profession = ?";
         $bind_types .= "s";
         $bind_params[] = $new_profession;
-        $_SESSION['profession'] = $new_profession; // সেশন আপডেট
+        $_SESSION['profession'] = $new_profession; 
     }
 
-    // --- প্রোফাইল ইমেজ আপডেট হ্যান্ডলিং ---
     $current_profile_image = $_SESSION['profile_image'];
-    $new_profile_image_path = $current_profile_image; // ডিফল্টভাবে বর্তমান ইমেজ পাথ
+    $new_profile_image_path = $current_profile_image; 
 
     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === UPLOAD_ERR_OK) {
         $file_tmp_name = $_FILES['profile_image']['tmp_name'];
@@ -121,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: dashboard.php");
             exit();
         }
-        if ($file_size > 5 * 1024 * 1024) { // Max 5MB
+        if ($file_size > 5 * 1024 * 1024) { 
             $_SESSION['message'] = "File size exceeds limit (5MB).";
             header("Location: dashboard.php");
             exit();
@@ -134,21 +124,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (move_uploaded_file($file_tmp_name, $target_file)) {
             $new_profile_image_path = $unique_file_name;
 
-            // পুরনো ইমেজ ডিলিট করুন যদি ডিফল্ট না হয়
             if (!empty($current_profile_image) && $current_profile_image !== 'default.png' && file_exists($upload_dir . $current_profile_image)) {
                 unlink($upload_dir . $current_profile_image);
             }
             $update_fields[] = "profile_image = ?";
             $bind_types .= "s";
             $bind_params[] = $new_profile_image_path;
-            $_SESSION['profile_image'] = $new_profile_image_path; // সেশন আপডেট
+            $_SESSION['profile_image'] = $new_profile_image_path;
         } else {
             $_SESSION['message'] = "Error uploading new profile image. Please try again.";
             header("Location: dashboard.php");
             exit();
         }
     }
-    // --- এন্ড প্রোফাইল ইমেজ আপডেট হ্যান্ডলিং ---
 
 
     if (empty($update_fields)) {
@@ -158,8 +146,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $sql = "UPDATE users SET " . implode(", ", $update_fields) . " WHERE id = ?";
-    $bind_types .= "i"; // Add type for user_id
-    $bind_params[] = $user_id; // Add user_id to params
+    $bind_types .= "i"; 
+    $bind_params[] = $user_id; 
 
     $stmt = $conn->prepare($sql);
     if ($stmt === false) {
@@ -168,12 +156,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // bind_param dynamically
     call_user_func_array([$stmt, 'bind_param'], array_merge([$bind_types], $bind_params));
 
     if ($stmt->execute()) {
         $_SESSION['message'] = "Profile updated successfully!";
-        // সেশন ডেটা ইতিমধ্যেই উপরে আপডেট করা হয়েছে
     } else {
         $_SESSION['message'] = "Error updating profile: " . $stmt->error;
     }
@@ -185,11 +171,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 
 } else {
-    // If accessed directly without POST, redirect to dashboard
     header("Location: dashboard.php");
     exit();
 }
 ?>
 <?php
-ob_end_flush(); // আউটপুট বাফারিং শেষ
+ob_end_flush();
 ?>

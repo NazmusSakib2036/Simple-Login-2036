@@ -1,7 +1,6 @@
-/* General Body and Container Styling */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
-    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%); /* Gradient background */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,60 +14,59 @@ body {
 .container {
     background-color: #ffffff;
     padding: 40px;
-    border-radius: 12px; /* More rounded corners */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 450px; /* Slightly wider container */
+    max-width: 450px;
     text-align: center;
-    box-sizing: border-box; /* Ensures padding doesn't add to total width */
+    box-sizing: border-box;
 }
 
 h2 {
     color: #333;
-    margin-bottom: 30px; /* More space below heading */
-    font-size: 2.2em; /* Larger heading */
-    font-weight: 700; /* Bolder */
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    font-weight: 700;
 }
 
-/* Input Group Styling */
 .input-group {
-    margin-bottom: 20px; /* More space between input groups */
+    margin-bottom: 20px;
     text-align: left;
 }
 
 .input-group label {
     display: block;
-    margin-bottom: 8px; /* Space between label and input */
+    margin-bottom: 8px;
     color: #555;
-    font-weight: 600; /* Slightly bolder label */
+    font-weight: 600;
     font-size: 0.95em;
 }
 
 .input-group input[type="text"],
 .input-group input[type="email"],
 .input-group input[type="password"],
-.input-group select { /* Styling for select dropdown */
+.input-group select {
     width: 100%;
-    padding: 12px 15px; /* More padding */
-    border: 1px solid #ced4da; /* Lighter border */
-    border-radius: 8px; /* Rounded input fields */
+    padding: 12px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
     box-sizing: border-box;
     font-size: 1em;
-    transition: all 0.3s ease; /* Smooth transitions for focus */
-    background-color: #f8f9fa; /* Light background for inputs */
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
     color: #495057;
-    -webkit-appearance: none; /* Remove default select arrow */
+    -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20fill%3D%22%23495057%22%20d%3D%22M9.293%2012.95l.707.707L15%2010.707l-4.293-4.293-.707.707L13.586%2010z%22%2F%3E%3C%2Fsvg%3E'); /* Custom arrow for select */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20fill%3D%22%23495057%22%20d%3D%22M9.293%2012.95l.707.707L15%2010.707l-4.293-4.293-.707.707L13.586%2010z%22%2F%3E%3C%2Fsvg%3E');
     background-repeat: no-repeat;
     background-position: right 15px center;
     background-size: 1em;
 }
 
 .input-group input[type="file"] {
-    padding: 12px 0; /* Adjust padding for file input */
-    border: none; /* Remove border for file input */
+    padding: 12px 0;
+    border: none;
     background-color: transparent;
 }
 
@@ -76,41 +74,39 @@ h2 {
 .input-group input[type="email"]:focus,
 .input-group input[type="password"]:focus,
 .input-group select:focus {
-    border-color: #007bff; /* Blue border on focus */
-    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Light blue shadow on focus */
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
     outline: none;
-    background-color: #fff; /* White background on focus */
+    background-color: #fff;
 }
 
-/* Button Styling */
 button[type="submit"] {
     background-color: #007bff;
     color: white;
-    padding: 14px 20px; /* Larger padding for button */
+    padding: 14px 20px;
     border: none;
-    border-radius: 8px; /* Rounded button */
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 1.1em; /* Larger font size */
+    font-size: 1.1em;
     font-weight: 600;
     width: 100%;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
-    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); /* Button shadow */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    transform: translateY(-2px); /* Slight lift effect */
-    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4); /* Enhanced shadow on hover */
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
 }
 
 button[type="submit"]:active {
-    transform: translateY(0); /* Press down effect */
+    transform: translateY(0);
     box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
 }
 
-/* Link and Paragraph Styling */
 p {
-    margin-top: 25px; /* More space above paragraphs */
+    margin-top: 25px;
     color: #666;
     font-size: 0.95em;
 }
@@ -127,10 +123,9 @@ p a:hover {
     text-decoration: underline;
 }
 
-/* Message Styling */
 .message {
-    background-color: #e2f0d9; /* Lighter green for success */
-    color: #28a745; /* Darker green text */
+    background-color: #e2f0d9;
+    color: #28a745;
     border: 1px solid #c3e6cb;
     padding: 12px;
     border-radius: 6px;
@@ -139,8 +134,7 @@ p a:hover {
     font-size: 0.95em;
 }
 
-/* Error Message Styling (optional, but good practice) */
-.error-message { /* You would add this class to your error display */
+.error-message {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
@@ -151,20 +145,16 @@ p a:hover {
     font-size: 0.95em;
 }
 
-/* Dashboard specific styling for profile image */
 .profile-img {
-    width: 120px; /* Slightly larger image */
+    width: 120px;
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    margin: 20px auto; /* Center image and add vertical margin */
-    border: 4px solid #007bff; /* Thicker, prominent border */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Shadow for image */
+    margin: 20px auto;
+    border: 4px solid #007bff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
-
-
-/* Social Login Divider */
 .social-login-divider {
     display: flex;
     align-items: center;
